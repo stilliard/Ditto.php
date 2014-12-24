@@ -1,0 +1,19 @@
+{
+    "name": "stilliard/ditto.php",
+    "description": "Web Proxy that handles all asset and link replacements to keep inside the proxy.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andrew Stilliard",
+            "email": "andrew.stilliard@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Ditto\\": "src"
+        }
+    },
+    "require": {
+        "guzzlehttp/guzzle": "~5.0"
+    }
+}
