@@ -30,6 +30,11 @@ class Factory
 		// detect any body
 		$content = (string)$res->getBody();
 
+		// Handle additional HTML content
+		if (isset($config['append_html_content']) && stristr($res->getHeader('content-type'), 'html')) {
+			$content .= $config['append_html_content'];
+		}
+
 		// run replacements over content
 		$res = new Response($content);
 		$res->setProxyPath($config['proxy_url'].'/');
