@@ -14,7 +14,7 @@ class Factory
 		$proxyPath = parse_url($config['proxy_url'], PHP_URL_PATH);
 
 		// replace the proxy directory from the $path
-		$path = preg_replace('/^' . preg_quote($proxyPath) . '/', '', $path);
+		$path = preg_replace('/^' . preg_quote($proxyPath, '/') . '/', '', $path);
 
 		// make request
 		$req = new Request($method, $config['domain_url']);
