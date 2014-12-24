@@ -10,6 +10,12 @@ class Factory
 		$method = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'GET';
 		$path = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/';
 
+		// parse the proxy url, and grab the directory
+		$proxyPath = parse_url($config['proxy_url'], PHP_URL_PATH);
+
+		// replace the proxy directory from the $path
+		$path = preg_replace('/^' . preg_quote($proxyPath) . '/', '', $path);
+
 		// make request
 		$req = new Request($method, $config['domain_url']);
 		$res = $req->send($path);
