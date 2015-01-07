@@ -27,8 +27,28 @@ class Factory
 		// content-type
 		self::setHttpContentType($res->getHeader('content-type'));
 
-		// detect any body
-		$content = (string)$res->getBody();
+		$content = (string) $res->getBody();
+
+        // Hijack all ajax requests
+		if (stristr($res->getHeader('content-type'), 'html')) {
+          	// Idea from: http://verboselogging.com/2010/02/20/hijack-ajax-requests-like-a-terrorist
+			$script_include = "
+            <script>
+            (function(open) {
+                // set our start path
+            	var ourSuperHackyProxyPath = '" . str_replace('\'', '', $config['proxy_url']) . "/';
+                // hijack the XMLHttpRequest open method
+                XMLHttpRequest.prototype.open = function(method, url, async, user, pass) {
+                    // force internal links to use our proxy
+                    if ( ! url.match(/^https?:\/\//)) {
+                        url = ourSuperHackyProxyPath + url.replace(/^\//, '');
+                    }
+                    open.call(this, method, url, async, user, pass);
+                };
+            })(XMLHttpRequest.prototype.open);
+            </script>";
+			$content = str_replace('<head>', '<head>' . $script_include, $content);
+		}
 
 		// Handle additional HTML content
 		if (isset($config['append_html_content']) && stristr($res->getHeader('content-type'), 'html')) {
