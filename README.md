@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/stilliard/Ditto.php.svg?branch=master)](https://travis-ci.org/stilliard/Ditto.php)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/stilliard/Ditto.php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/stilliard/Ditto.php/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/stilliard/Ditto.php/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/stilliard/Ditto.php/?branch=master)
-[![Latest Stable Version](https://poser.pugx.org/leaphly/cart-bundle/version.svg)](https://packagist.org/packages/leaphly/cart-bundle) [![Latest Unstable Version](https://poser.pugx.org/leaphly/cart-bundle/v/unstable.svg)](//packagist.org/packages/leaphly/cart-bundle) [![Total Downloads](https://poser.pugx.org/leaphly/cart-bundle/downloads.svg)](https://packagist.org/packages/leaphly/cart-bundle)
+[![Latest Stable Version](https://poser.pugx.org/stilliard/ditto.php/v/stable.svg)](https://packagist.org/packages/stilliard/ditto.php) [![Total Downloads](https://poser.pugx.org/stilliard/ditto.php/downloads.svg)](https://packagist.org/packages/stilliard/ditto.php) [![Latest Unstable Version](https://poser.pugx.org/stilliard/ditto.php/v/unstable.svg)](https://packagist.org/packages/stilliard/ditto.php) [![License](https://poser.pugx.org/stilliard/ditto.php/license.svg)](https://packagist.org/packages/stilliard/ditto.php)
 
 ## About
 
