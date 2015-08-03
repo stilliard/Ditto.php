@@ -7,8 +7,16 @@ class Factory
 	public static function run($config)
 	{
 		// detect request method and url
-		$method = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'GET';
-		$path = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/';
+		$method = isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD']!=''
+					? $_SERVER['REQUEST_METHOD']
+					: 'GET';
+		$path = isset($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI']!=''
+					? $_SERVER['REQUEST_URI']
+					: '/';
+
+		if ($path=='/' && isset($config['start_path']) && $config['start_path']!='') {
+			$path = $config['start_path'];
+		}
 
 		// parse the proxy url, and grab the directory
 		$proxyPath = parse_url($config['proxy_url'], PHP_URL_PATH);
