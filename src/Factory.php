@@ -41,6 +41,11 @@ class Factory
 		// replace the proxy directory from the $path
 		$path = preg_replace('/^' . preg_quote($proxyPath, '/') . '/', '', $path);
 
+		// TODO: throw an error
+		if ($domain == 'http://' || $domain == '') {
+			return '';
+		}
+
 		// make request
 		$req = new Request($method, $domain);
 		$res = $req->send($path);
