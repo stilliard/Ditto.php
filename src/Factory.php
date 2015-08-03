@@ -10,9 +10,26 @@ class Factory
 		$method = isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD']!=''
 					? $_SERVER['REQUEST_METHOD']
 					: 'GET';
-		$path = isset($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI']!=''
-					? $_SERVER['REQUEST_URI']
-					: '/';
+
+		$usingUrlParam = false;
+		if (isset($config['url_param_access'])) {
+			// use a url param to get url we're mimic'ing?
+			$url = isset($_GET[$config['url_param_access']]) && $_GET[$config['url_param_access']]!=''
+						? $_GET[$config['url_param_access']]
+						: '/';
+			$parsedDoamin = parse_url($url);
+			$domain = (isset($parsedDoamin['protocol']) ? $parsedDoamin['protocol'] : 'http') . '://';
+			$domain .= isset($parsedDoamin['host']) ? $parsedDoamin['host'] : '';
+			$path = isset($parsedDoamin['path']) ? $parsedDoamin['path'] : '/';
+			$path .= isset($parsedDoamin['query']) ? '?' . $parsedDoamin['query'] : '';
+			$usingUrlParam = true;
+		} else {
+			// fallback to given request :)
+			$domain = $config['domain_url'];
+			$path = isset($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI']!=''
+						? $_SERVER['REQUEST_URI']
+						: '/';
+		}
 
 		if ($path=='/' && isset($config['start_path']) && $config['start_path']!='') {
 			$path = $config['start_path'];
@@ -25,7 +42,7 @@ class Factory
 		$path = preg_replace('/^' . preg_quote($proxyPath, '/') . '/', '', $path);
 
 		// make request
-		$req = new Request($method, $config['domain_url']);
+		$req = new Request($method, $domain);
 		$res = $req->send($path);
 
 		// setup response
@@ -44,12 +61,15 @@ class Factory
             <script>
             (function(open) {
                 // set our start path
-            	var ourSuperHackyProxyPath = '" . str_replace('\'', '', $config['proxy_url']) . "/';
+            	var ourSuperHackyProxyPath = '" . str_replace('\'', '', $domain) . "/';
                 // hijack the XMLHttpRequest open method
                 XMLHttpRequest.prototype.open = function(method, url, async, user, pass) {
                     // force internal links to use our proxy
                     if ( ! url.match(/^https?:\/\//)) {
-                        url = ourSuperHackyProxyPath + url.replace(/^\//, '');
+                    	" . ($usingUrlParam
+                    		? " url = ourSuperHackyProxyPath + encodeURIComponent(url.replace(/^\//, '')); "
+                    		: " url = ourSuperHackyProxyPath + url.replace(/^\//, ''); "
+                    	) . "
                     }
                     open.call(this, method, url, async, user, pass);
                 };
@@ -65,11 +85,14 @@ class Factory
 
 		// run replacements over content
 		$res = new Response($content);
-		$res->setProxyPath($config['proxy_url'].'/');
-		$res->replaceDomainLinks($config['domain_url'].'/');
-		$res->replaceInternalHtmlLinks();
+		$res->setProxyPath($config['proxy_url'] . (
+			$usingUrlParam ? '?' . $config['url_param_access'] . '=' . urlencode($domain)
+			: ''
+		));
+		$res->replaceDomainLinks($domain);
+		$res->replaceInternalHtmlLinks($usingUrlParam);
 		if ( stristr($path, '.css') ) {
-			$res->replaceInternalCssLinks();
+			$res->replaceInternalCssLinks($usingUrlParam);
 		}
 		$content = $res->getHtml();
 
