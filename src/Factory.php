@@ -4,6 +4,12 @@ namespace Ditto;
 
 class Factory
 {
+	/**
+	 * Run site through Ditto proxy
+	 *
+	 * @param array $config
+	 * @return string
+	 */
 	public static function run($config)
 	{
 		// detect request method and url
@@ -18,7 +24,7 @@ class Factory
 						? $_GET[$config['url_param_access']]
 						: '/';
 			$parsedDoamin = parse_url($url);
-			$domain = (isset($parsedDoamin['protocol']) ? $parsedDoamin['protocol'] : 'http') . '://';
+			$domain = (isset($parsedDoamin['scheme']) ? $parsedDoamin['scheme'] : 'http') . '://';
 			$domain .= isset($parsedDoamin['host']) ? $parsedDoamin['host'] : '';
 			$path = isset($parsedDoamin['path']) ? $parsedDoamin['path'] : '/';
 			$path .= isset($parsedDoamin['query']) ? '?' . $parsedDoamin['query'] : '';
