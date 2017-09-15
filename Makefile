@@ -1,6 +1,6 @@
 
 install:
-	composer install --no-interaction --dev
+	composer install --no-interaction
 
 test:
 	phpunit tests
