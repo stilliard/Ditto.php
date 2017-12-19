@@ -14,14 +14,14 @@ class Request
 		$this->method = $method;
 		$this->url = $url;
 
-		$this->client = new Client();
+		$this->client = new Client(['base_uri' => $this->url]);
 	}
 
 	public function send($path)
 	{
-		$request = $this->client->createRequest($this->method, $this->url . $path, [
+		return $this->client->request($this->method, $path, [
 			'verify' => false,
+			'http_errors' => false,
 		]);
-		return $this->client->send($request);
 	}
 }
