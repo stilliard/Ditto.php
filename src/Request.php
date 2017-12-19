@@ -19,7 +19,9 @@ class Request
 
 	public function send($path)
 	{
-		$request = $this->client->createRequest($this->method, $this->url . $path);
+		$request = $this->client->createRequest($this->method, $this->url . $path, [
+			'verify' => false,
+		]);
 		return $this->client->send($request);
 	}
 }
