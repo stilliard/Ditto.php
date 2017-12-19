@@ -61,12 +61,13 @@ class Factory
 		self::setHttpStatus($res->getStatusCode());
 
 		// content-type
-		self::setHttpContentType($res->getHeader('content-type'));
+		$contentType = $res->getHeader('content-type')[0];
+		self::setHttpContentType($contentType);
 
 		$content = (string) $res->getBody();
 
         // Hijack all ajax requests
-		if (stristr($res->getHeader('content-type'), 'html')) {
+		if (stristr($contentType, 'html')) {
           	// Idea from: http://verboselogging.com/2010/02/20/hijack-ajax-requests-like-a-terrorist
 			$script_include = "
             <script>
@@ -90,7 +91,7 @@ class Factory
 		}
 
 		// Handle additional HTML content
-		if (isset($config['append_html_content']) && stristr($res->getHeader('content-type'), 'html')) {
+		if (isset($config['append_html_content']) && stristr($contentType, 'html')) {
 			$content .= $config['append_html_content'];
 		}
 
