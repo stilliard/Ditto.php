@@ -53,7 +53,7 @@ class Factory
 		}
 
 		// make request
-		$req = new Request($method, $domain);
+		$req = new Request($method, $domain, isset($config['cookie_file']) ? $config['cookie_file'] : null);
 		$res = $req->send($path);
 
 		// setup response
