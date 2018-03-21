@@ -1,5 +1,5 @@
-
 ![Ditto.php](./docs/images/dittophp.png)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fstilliard%2FDitto.php.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fstilliard%2FDitto.php?ref=badge_shield)
 
 [![Build Status](https://travis-ci.org/stilliard/Ditto.php.svg?branch=master)](https://travis-ci.org/stilliard/Ditto.php)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/stilliard/Ditto.php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/stilliard/Ditto.php/?branch=master)
@@ -32,3 +32,6 @@ See: [Example](./example/index.php)
 
 This project is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
 
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fstilliard%2FDitto.php.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fstilliard%2FDitto.php?ref=badge_large)
