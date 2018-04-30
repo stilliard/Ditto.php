@@ -54,6 +54,9 @@ class Factory
 
 		// make request
 		$req = new Request($method, $domain, isset($config['cookie_file']) ? $config['cookie_file'] : null);
+		if ($config['user_agent']) {
+			$req->setHeader('User-Agent', $config['user_agent']);
+		}
 		$res = $req->send($path);
 
 		// setup response
