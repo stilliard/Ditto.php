@@ -39,7 +39,7 @@ class Factory
 
 		if ($path=='/' && isset($config['start_path']) && $config['start_path']!='') {
 			$path = $config['start_path'];
-		}
+        }
 
 		// parse the proxy url, and grab the directory
 		$proxyPath = parse_url($config['proxy_url'], PHP_URL_PATH);
@@ -50,14 +50,16 @@ class Factory
 		// TODO: throw an error
 		if ($domain == 'http://' || $domain == '') {
 			return '';
-		}
+        }
+
+        $path = '/' . ltrim($path, '/');
 
 		// make request
 		$req = new Request($method, $domain, isset($config['cookie_file']) ? $config['cookie_file'] : null);
 		if ($config['user_agent']) {
 			$req->setHeader('User-Agent', $config['user_agent']);
 		}
-		$res = $req->send($path);
+        $res = $req->send($path);
 
 		// setup response
 		// give same http status
