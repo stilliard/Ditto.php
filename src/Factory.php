@@ -65,9 +65,12 @@ class Factory
 		// give same http status
 		self::setHttpStatus($res->getStatusCode());
 
-		// content-type
-		$contentType = $res->getHeader('content-type')[0];
-		self::setHttpContentType($contentType);
+        // content-type
+        $contentType = 'text/html';
+        if ($res->getHeader('content-type')) {
+            $contentType = $res->getHeader('content-type')[0];
+        }
+        self::setHttpContentType($contentType);
 
 		$content = (string) $res->getBody();
 
