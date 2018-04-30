@@ -21,7 +21,7 @@ class Request
 		$this->method = $method;
 		$this->url = $url;
 		if ($cookieFile) {
-			$this->cookieJar = new FileCookieJar($cookieFile);
+			$this->cookieJar = new FileCookieJar($cookieFile, true);
 		}
 
 		$this->client = new Client(['base_uri' => $this->url]);
