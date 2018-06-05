@@ -1,6 +1,6 @@
 pipeline:
   build:
-    image: php:latest
+    image: shippingdocker/php-composer:latest
     commands: 
       - make install
       - make test
