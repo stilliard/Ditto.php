@@ -23,13 +23,19 @@ class Response
 		$this->html = str_replace($domain, $this->proxyPath, $this->html);
 	}
 
+	// handle url encoding
+	public function hadleProxyURL($url)
+	{
+		return \strstr($this->proxyPath, '?') ? urlencode($url) : $url;
+	}
+
 	public function replaceInternalHtmlLinks($usingUrlParam=false)
 	{
 		// replace href & src links where they DO NOT start with https?:... or //...
 		$this->html = preg_replace_callback('/(src|href)=(["\'])(?!((["\'])?https?:|(["\'])?\/\/))(.*?)\2/i', function ($matches) use ($usingUrlParam) {
             return $matches[1] . '=' . $matches[2]
                 . rtrim($this->proxyPath, '/')
-                . urlencode('/' . ltrim($usingUrlParam ? htmlspecialchars_decode($matches[6]) : $matches[6], '/'))
+                . $this->hadleProxyURL('/' . ltrim($usingUrlParam ? htmlspecialchars_decode($matches[6]) : $matches[6], '/'))
                 . $matches[2];
         }, $this->html);
 	}
@@ -38,7 +44,7 @@ class Response
 	{
 		// replace url() links where they DO NOT start with https?:... or //...
 		$this->html = preg_replace_callback('/url\((["\'])?(?!((["\'])?https?:|(["\'])?\/\/))(.*?)(["\'])?\)/i', function ($matches) use ($usingUrlParam) {
-			return 'url(' . $matches[1] . rtrim($this->proxyPath, '/') .'/'. ltrim($usingUrlParam ? urlencode(htmlspecialchars_decode($matches[5])) : $matches[5], '/') . $matches[1] . ')';
+			return 'url(' . $matches[1] . rtrim($this->proxyPath, '/') .'/'. ltrim($usingUrlParam ? $this->hadleProxyURL(htmlspecialchars_decode($matches[5])) : $matches[5], '/') . $matches[1] . ')';
 		}, $this->html);
 	}
 
