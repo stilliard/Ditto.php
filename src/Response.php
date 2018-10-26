@@ -29,7 +29,11 @@ class Response
 		$this->html = preg_replace_callback('/(src|href)=(["\'])(?!((["\'])?https?:|(["\'])?\/\/))(.*?)\2/i', function ($matches) use ($usingUrlParam) {
             return $matches[1] . '=' . $matches[2]
                 . rtrim($this->proxyPath, '/')
-                . urlencode('/' . ltrim($usingUrlParam ? htmlspecialchars_decode($matches[6]) : $matches[6], '/'))
+                . (
+					$usingUrlParam
+						? urlencode('/' . ltrim(htmlspecialchars_decode($matches[6]), '/')) # url encode when using url param method
+						: '/' . ltrim($matches[6], '/')
+				)
                 . $matches[2];
         }, $this->html);
 	}
@@ -38,7 +42,13 @@ class Response
 	{
 		// replace url() links where they DO NOT start with https?:... or //...
 		$this->html = preg_replace_callback('/url\((["\'])?(?!((["\'])?https?:|(["\'])?\/\/))(.*?)(["\'])?\)/i', function ($matches) use ($usingUrlParam) {
-			return 'url(' . $matches[1] . rtrim($this->proxyPath, '/') .'/'. ltrim($usingUrlParam ? urlencode(htmlspecialchars_decode($matches[5])) : $matches[5], '/') . $matches[1] . ')';
+			return 'url(' . $matches[1] . rtrim($this->proxyPath, '/') . '/'
+				. (
+					$usingUrlParam
+						? urlencode(ltrim(htmlspecialchars_decode($matches[5]), '/')) # url encode when using url param method
+						: ltrim($matches[5], '/')
+				)
+				. $matches[1] . ')';
 		}, $this->html);
 	}
 
