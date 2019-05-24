@@ -3,7 +3,7 @@ install:
 	composer install --no-interaction
 
 test:
-	phpunit tests
+	./vendor/bin/phpunit tests
 
 server:
 	php -S localhost:8008 example/index.php

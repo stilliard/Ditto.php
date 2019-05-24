@@ -9,6 +9,6 @@ class RequestTest extends TestCase
 	{
 		$req = new Request('GET', 'https://www.wildfireinternet.co.uk');
 		$res = $req->send('/');
-		$this->assertContains('<body', (string)$res->getBody());
+		$this->assertStringContainsString('<body', (string)$res->getBody());
 	}
 }
