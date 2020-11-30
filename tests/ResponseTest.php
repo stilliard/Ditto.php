@@ -21,11 +21,15 @@ class ResponseTest extends TestCase
 
 			<img src="/img/something.png" alt="abc">
 			<img src="http://ajax.googleapis.com/something.png">
-			
+
 			<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 			<script src="js/demo.js"></script>
 
 			<link rel="stylesheet" href="/css/main.css">
+			<!-- Angular Specific -->
+			<link rel=preload href=/css/main.css as=style crossorigin>
+			<link rel=preload href=/css/main.css?1606323568292 as=style crossorigin>
+			<link rel=stylesheet href=/css/main.css>
 
 			body {
 				background: url(/image/something.png);
@@ -50,11 +54,15 @@ class ResponseTest extends TestCase
 
 			<img src="http://demo.com/proxy/img/something.png" alt="abc">
 			<img src="http://ajax.googleapis.com/something.png">
-			
+
 			<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 			<script src="http://demo.com/proxy/js/demo.js"></script>
 
 			<link rel="stylesheet" href="http://demo.com/proxy/css/main.css">
+			<!-- Angular Specific -->
+			<link rel=preload href="http://demo.com/proxy/css/main.css" as=style crossorigin>
+			<link rel=preload href="http://demo.com/proxy/css/main.css?1606323568292" as=style crossorigin>
+			<link rel=stylesheet href="http://demo.com/proxy/css/main.css">
 
 			body {
 				background: url(http://demo.com/proxy/image/something.png);

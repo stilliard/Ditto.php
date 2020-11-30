@@ -11,6 +11,11 @@ class Response
 	public function __construct($html)
 	{
 		$this->html = $this->origHtml = $html;
+
+		// Fix links that don't use quotes
+		$this->html = preg_replace_callback('/(src|href)=([^"\']*?)(\s|>)/', function ($matches) {
+			return $matches[1] . '="' . $matches[2] . '"' . $matches[3];
+		}, $this->html);
 	}
 
 	public function setProxyPath($path)
