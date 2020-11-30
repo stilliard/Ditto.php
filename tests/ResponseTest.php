@@ -29,6 +29,7 @@ class ResponseTest extends TestCase
 			<!-- Angular Specific -->
 			<link rel=preload href=/css/main.css as=style crossorigin>
 			<link rel=preload href=/css/main.css?1606323568292 as=style crossorigin>
+			<link rel=stylesheet href=/css/main.css>
 
 			body {
 				background: url(/image/something.png);
@@ -61,6 +62,7 @@ class ResponseTest extends TestCase
 			<!-- Angular Specific -->
 			<link rel=preload href="http://demo.com/proxy/css/main.css" as=style crossorigin>
 			<link rel=preload href="http://demo.com/proxy/css/main.css?1606323568292" as=style crossorigin>
+			<link rel=stylesheet href="http://demo.com/proxy/css/main.css">
 
 			body {
 				background: url(http://demo.com/proxy/image/something.png);
