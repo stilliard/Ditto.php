@@ -13,8 +13,8 @@ class Response
 		$this->html = $this->origHtml = $html;
 
 		// Fix links that don't use quotes
-		$this->html = preg_replace_callback('/(src|href)=([^"\']*?)(\s|>)/', function ($matches) {
-			return $matches[1] . '="' . $matches[2] . '"' . $matches[3];
+		$this->html = preg_replace_callback('/\s(src|href)=([^"\']*?)(\s|>)/', function ($matches) {
+			return ' ' . $matches[1] . '="' . $matches[2] . '"' . $matches[3];
 		}, $this->html);
 	}
 
