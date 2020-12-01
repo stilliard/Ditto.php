@@ -40,6 +40,9 @@ class ResponseTest extends TestCase
 				background: url("//ajax.googleapis.com/something.png");
 				background: url("http://www.wildfireinternet.co.uk/something.png");
 			}
+			<script>
+				window.location.href=e;
+			</script>
 		';
 		$expected = '
 			Nice to talk about /Home.html and not have it replaced...
@@ -73,6 +76,9 @@ class ResponseTest extends TestCase
 				background: url("//ajax.googleapis.com/something.png");
 				background: url("http://demo.com/proxy/something.png");
 			}
+			<script>
+				window.location.href=e;
+			</script>
 		';
 		$res = new Response($html);
 		$res->setProxyPath('http://demo.com/proxy/');
