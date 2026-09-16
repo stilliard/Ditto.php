@@ -55,11 +55,20 @@ class Factory
         $path = '/' . ltrim($path, '/');
 
 		// make request
-		$req = new Request($method, $domain, isset($config['cookie_file']) ? $config['cookie_file'] : null);
+		$req = new Request($method, $domain);
 		if (isset($config['user_agent']) && $config['user_agent']) {
 			$req->setHeader('User-Agent', $config['user_agent']);
 		}
+		// forward this visitor's own cookies to the origin (per-visitor, not shared)
+		if (isset($_SERVER['HTTP_COOKIE']) && $_SERVER['HTTP_COOKIE'] !== '') {
+			$req->setHeader('Cookie', $_SERVER['HTTP_COOKIE']);
+		}
         $res = $req->send($path);
+
+		// relay any cookies the origin sets straight back to this visitor
+		foreach ($res->getHeader('Set-Cookie') as $setCookie) {
+			header('Set-Cookie: ' . $setCookie, false);
+		}
 
 		// setup response
 		// give same http status

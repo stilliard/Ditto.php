@@ -3,26 +3,21 @@
 namespace Ditto;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Cookie\FileCookieJar;
 
 class Request
 {
 	public $method;
 	public $url;
-    protected $cookieJar;
     protected $headers = [
         'Accept' => '*/*',
         'Accept-Language' => 'en-GB,en;q=0.5',
         'User-Agent' => 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:59.0) Gecko/20100101 Firefox/59.0',
     ];
 
-	public function __construct($method, $url, $cookieFile=null)
+	public function __construct($method, $url)
 	{
 		$this->method = $method;
 		$this->url = $url;
-		if ($cookieFile) {
-			$this->cookieJar = new FileCookieJar($cookieFile, true);
-		}
 
 		$this->client = new Client(['base_uri' => $this->url]);
     }
@@ -38,7 +33,7 @@ class Request
             'headers' => $this->headers,
 			'verify' => false,
 			'http_errors' => false,
-			'cookies' => $this->cookieJar,
+			'cookies' => false,
 		]);
 	}
 }

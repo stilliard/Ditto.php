@@ -9,5 +9,4 @@ echo \Ditto\Factory::run(array(
 	'proxy_url' => 'http://localhost:8024',
 	'domain_url' => 'https://www.brilliantwallart.co.uk/',
 	'start_path' => '/',
-	'cookie_file' => '/tmp/somecookie',
 ));
