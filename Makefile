@@ -5,9 +5,10 @@ install:
 test:
 	./vendor/bin/phpunit tests
 
+PORT?=8008
 server:
-	php -S localhost:8008 example/index.php
+	php -S localhost:$(PORT) example/index.php
 
 server-url-param:
-	php -S localhost:8008 example/via_url_param.php
+	php -S localhost:$(PORT) example/via_url_param.php
 
